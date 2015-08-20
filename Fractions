@@ -1,0 +1,68 @@
+class Fraction
+{
+    var n : Int = 0;
+    var d : Int = 1;
+    
+    init()
+    {
+        
+    }
+    
+    init( numerator n : Int, denominator d : Int )
+    {
+        if ( d != 0 )
+        {
+            self.n = n;
+            self.d = d;
+        }
+    }
+    
+    func add( other : Fraction ) -> Fraction
+    {
+        var f = Fraction( numerator : self.n * other.d + self.d * other.n, denominator : self.d * other.d );
+        f.simplify();
+        return f;
+        
+    }
+    
+    func subtract(other: Fraction) -> Fraction
+    {
+        var f = Fraction( numerator : (self.n * other.d) - (self.d * other.n), denominator : self.d * other.d);
+        f.simplify();
+        return f;
+    }
+    
+    func multiply(other: Fraction) -> Fraction
+    {
+        var f = Fraction( numerator : self.n * other.n, denominator : self.d * other.d );
+        f.simplify();
+        return f;
+    }
+    
+    func divide(other: Fraction) -> Fraction
+    {
+        var f = Fraction( numerator : self.n * other.d, denominator : self.d * other.n );
+        f.simplify();
+        return f;
+    }
+    
+    func simplify()
+    {
+        
+        let signN = self.n >= 0 ? 1 : -1
+        let signD = self.d >= 0 ? 1 : -1
+        let sign = signN * signD
+        
+        var u = self.n * sign
+        var v = self.d
+        var temp: Int;
+        while ( v != 0 )
+        {
+            temp = u % v
+            u = v
+            v = temp
+        }
+        self.n /= u
+        self.d /= u
+    }
+}
